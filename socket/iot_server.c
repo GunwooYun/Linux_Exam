@@ -117,9 +117,17 @@ int main(int argc, char *argv[])
 	if(pthread_mutex_init(&mutx, NULL))
 		error_handling("mutex init error");
 
+	/* Create Socket IPv4, TCP */
 	serv_sock = socket(PF_INET, SOCK_STREAM, 0);
 
+	/* serv_adr init as 0 */
 	memset(&serv_adr, 0, sizeof(serv_adr));
+
+	/****************************************************************
+	* sin_len  *  sin_family  *  sin_port  *  sin_addr  *  sin_zero *
+	*    2	   *     2        *     2      *     4      *     8     *
+	****************************************************************/
+
 	serv_adr.sin_family=AF_INET;
 	serv_adr.sin_addr.s_addr=htonl(INADDR_ANY);
 	serv_adr.sin_port=htons(atoi(argv[1]));
